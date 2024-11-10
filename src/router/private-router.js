@@ -10,8 +10,18 @@ import {
   updateCategoryController,
   deleteCategoryController,
 } from "../controller/category-controller.js";
+import multer from "multer";
+import { fileFilter, fileStorage } from "../utils/multer.js";
+import {
+  createMenuController,
+  getMenuController,
+  updateMenuController,
+  deleteMenuController,
+} from "../controller/menu-controller.js";
 
 export const authRouter = express.Router();
+
+const upload = multer({ storage: fileStorage, fileFilter: fileFilter });
 
 // Category
 authRouter.post(
@@ -26,3 +36,17 @@ authRouter.put(
   updateCategoryController
 );
 authRouter.delete("/api/category/:id", deleteCategoryController);
+
+// Menu
+authRouter.post(
+  "/api/menu/create",
+  upload.single("thumbnail"),
+  createMenuController
+);
+authRouter.get("/api/menu", getMenuController);
+authRouter.put(
+  "/api/menu/:id",
+  upload.single("thumbnail"),
+  updateMenuController
+);
+authRouter.delete("/api/menu/:id", deleteMenuController);

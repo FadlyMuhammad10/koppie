@@ -9,7 +9,10 @@ export const createCategoryService = async (req) => {
 };
 
 export const getCategoryService = async () => {
-  const categories = await categoryModel.find();
+  const categories = await categoryModel.find().populate({
+    path: "menu_lists",
+    select: "name ",
+  });
 
   return categories;
 };
