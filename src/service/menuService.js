@@ -54,6 +54,12 @@ export const getMenuService = async () => {
     .populate({ path: "category_id", select: "name_category" });
   return menus;
 };
+export const getUserMenuService = async () => {
+  const menus = await menuModel
+    .find({}, "-public_id -createdAt -updatedAt -__v")
+    .populate({ path: "category_id", select: "name_category" });
+  return menus;
+};
 
 export const updateMenuService = async (req) => {
   const id = req.params.id;

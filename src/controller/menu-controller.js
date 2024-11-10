@@ -1,6 +1,7 @@
 import {
   createMenuService,
   getMenuService,
+  getUserMenuService,
   updateMenuService,
   deleteMenuService,
 } from "../service/menuService.js";
@@ -20,6 +21,18 @@ export const createMenuController = async (req, res, next) => {
 export const getMenuController = async (req, res, next) => {
   try {
     const menu = await getMenuService();
+    res.status(200).json({
+      data: menu,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+export const getUserMenuController = async (req, res, next) => {
+  try {
+    const menu = await getUserMenuService(req);
     res.status(200).json({
       data: menu,
     });
